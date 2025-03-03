@@ -12,6 +12,10 @@ packer {
             version = "~> 1"
             source  = "github.com/hashicorp/virtualbox"
         }
+        proxmox = {
+            version = "~> 1"
+            source  = "github.com/hashicorp/proxmox"
+        }
     }
 }
 
@@ -75,8 +79,56 @@ source "virtualbox-iso" "practice-vm" {
     ]
 }
 
+source "proxmox-iso" "practice-vm" {
+    boot_wait         = "10s"
+    boot_command = [
+        "<wait>e",
+        "<wait><down><down><down><end><left><left><left><left> autoinstall ip=dhcp cloud-config-url=http://{{.HTTPIP}}:{{.HTTPPort}}/autoinstall.yaml<wait><f10><wait>"
+    ]
+    cores = 4
+    memory = 8192
+
+    disks {
+        disk_size         = "10G"
+        storage_pool      = "local-lvm"
+        type              = "scsi"
+    }
+    efi_config {
+        efi_storage_pool  = "local-lvm"
+        efi_type          = "4m"
+        pre_enrolled_keys = true
+    }
+    http_directory           = "cloud-init"
+    insecure_skip_tls_verify = true
+    
+    boot_iso {
+        type = "scsi"
+        iso_checksum            = "file:https://releases.ubuntu.com/noble/SHA256SUMS"
+        iso_file = "local:iso/ubuntu-24.04.2-live-server-amd64.iso"
+        unmount = true
+        iso_storage_pool = "local"
+    }
+
+    network_adapters {
+        bridge = "vmbr0"
+        model  = "virtio"
+    }
+    node                 = "scope"
+    username             = "root@pam!test"  # <username>@<realm>!<token_id>
+    token                = "e77dcf40-17a9-4a12-93a9-d5451450ffeb"
+    proxmox_url          = "https://192.168.251.30:8006/api2/json"
+    qemu_agent           = true
+    communicator         = "ssh"
+    ssh_timeout          = "10h"
+    ssh_username         = "ubuntu"
+    ssh_password         = "ubuntu"
+    template_description = "Ubuntu for eBPF course, generated on ${timestamp()}"
+    template_name        = "ubuntu-ebpf"
+    vm_name = "practice-vm"
+}
+
 build {
-    sources = ["sources.qemu.practice-vm", "sources.virtualbox-iso.practice-vm"]
+    sources = ["sources.qemu.practice-vm", "sources.virtualbox-iso.practice-vm", "sources.proxmox-iso.practice-vm"]
 
     # Setup for development
     provisioner "shell" {
@@ -94,7 +146,7 @@ build {
             "echo 'ubuntu' | sudo -S ln -s /usr/include/x86_64-linux-gnu/asm /usr/include/asm",
 
             # Setup Virtualbox clipboard
-            "echo 'ubuntu' | sudo -S VBoxClient --clipboard",
+            # "echo 'ubuntu' | sudo -S VBoxClient --clipboard",
 
             # Pull down the required repository
             "git clone https://github.com/easy-ebpf/lab-1 ~/Desktop/lab-1"

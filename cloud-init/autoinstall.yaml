@@ -42,3 +42,4 @@ autoinstall:
     # GUI
     - ubuntu-desktop-minimal
     - virtualbox-guest-x11 
+    - qemu-guest-agent
