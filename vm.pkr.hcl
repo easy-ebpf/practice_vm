@@ -16,7 +16,7 @@ packer {
 }
 
 source "qemu" "practice-vm" {
-    iso_url = "https://releases.ubuntu.com/noble/ubuntu-24.04.2-live-server-amd64.iso"
+    iso_url = "https://releases.ubuntu.com/noble/ubuntu-24.04.3-live-server-amd64.iso"
     iso_checksum            = "file:https://releases.ubuntu.com/noble/SHA256SUMS"
     disk_size = "10000M"
     memory = "4096"
