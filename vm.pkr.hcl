@@ -89,6 +89,7 @@ build {
 
             # Fix the boot lagging issue (we already have NetworkManager)
             "echo 'ubuntu' | sudo -S systemctl disable systemd-networkd",
+            "echo 'ubuntu' | sudo -S systemctl disable NetworkManager-wait-online.service",
 
             # Patch compiler error
             "echo 'ubuntu' | sudo -S ln -s /usr/include/x86_64-linux-gnu/asm /usr/include/asm",
