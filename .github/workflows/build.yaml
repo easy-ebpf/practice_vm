@@ -63,7 +63,7 @@ jobs:
       - name: Split the vm file in to chunks of 2G before uploading
         working-directory: ./build
         run: |
-          zip -s 1g -r -0 practice-vm.zip practice-vm.ova
+          zip -s 1900m -r -0 practice-vm.zip practice-vm.ova
 
       - name: Create a new release
         uses: softprops/action-gh-release@v2
