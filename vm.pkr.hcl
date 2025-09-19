@@ -16,7 +16,7 @@ packer {
 }
 
 source "qemu" "practice-vm" {
-    iso_url = "https://releases.ubuntu.com/noble/ubuntu-24.04.3-live-server-amd64.iso"
+    iso_url = "https://releases.ubuntu.com/noble/ubuntu-24.04.5-live-server-amd64.iso"
     iso_checksum            = "file:https://releases.ubuntu.com/noble/SHA256SUMS"
     disk_size = "10000M"
     memory = "4096"
@@ -51,7 +51,7 @@ source "virtualbox-iso" "practice-vm" {
     guest_os_type = "Ubuntu_64"
     hard_drive_discard = true
     format = "ova"
-    iso_url = "https://releases.ubuntu.com/noble/ubuntu-24.04.3-live-server-amd64.iso"
+    iso_url = "https://releases.ubuntu.com/noble/ubuntu-24.04.5-live-server-amd64.iso"
     iso_checksum            = "file:https://releases.ubuntu.com/noble/SHA256SUMS"
     output_directory = "build"
     headless = true
