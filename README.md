@@ -25,4 +25,4 @@
 
 
 ## 2. 使用自己的Ubuntu
-- `sudo apt install -y bpftool libbpf-dev build-essential clang`
+- `sudo apt install -y linux-tools-common libbpf-dev build-essential clang`
