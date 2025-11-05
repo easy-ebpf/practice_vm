@@ -25,4 +25,7 @@
 
 
 ## 2. 使用自己的Ubuntu
-- `sudo apt install -y linux-tools-common libbpf-dev build-essential clang`
+```bash
+sudo apt install -y linux-tools-common libbpf-dev build-essential clang
+sudo ln -s /usr/include/x86_64-linux-gnu/asm /usr/include/asm
+```
